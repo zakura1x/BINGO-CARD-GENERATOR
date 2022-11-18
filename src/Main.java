@@ -20,19 +20,20 @@ public class Main {
         out.println("BINGO TICKET GENERATOR");
         out.println("----------------------");
 
-        //Create 4 Bingo Cards
+        //Create an Arraylist for 4 Bingo Cards
         ArrayList<Integer> card1 = new ArrayList<Integer>();
         ArrayList<Integer> card2 = new ArrayList<Integer>();
         ArrayList<Integer> card3 = new ArrayList<Integer>();
         ArrayList<Integer> card4 = new ArrayList<Integer>();
 
-        //Generate 4 Bingo Cards
+        //Generate 4 Values for each Bingo Card
         generateRandomValuesOfCard(card1);
         generateRandomValuesOfCard(card2);
         generateRandomValuesOfCard(card3);
         generateRandomValuesOfCard(card4);
 
         //Union of 2 cards
+        //To create a 2 tickets in one block
         ArrayList<Integer> union1 = unionOfTwoCards(card1, card2);
         ArrayList<Integer> union2 = unionOfTwoCards(card3, card4);
 
@@ -42,21 +43,27 @@ public class Main {
         displayCard(union2);
 
         //check if the cards are unique
+        //If cards are not unique, It will have a message
+        out.print("Are the cards Unique?: ");
         if (!isUnique(card1, card2, card3, card4)){
-            out.println("The Cards are not unique");
+            out.println("The 4 BINGO Cards are not unique");
+        }else{
+            out.println("The 4 BINGO Cards are unique");
         }
-    }while(tryAgain());
+
+    }while(tryAgain()); //Loop the program if the user wants to try again
 
     out.println("--PROGRAM TERMINATED--");
+}
 
-    }
-
-    //Generate Bingo Card
+    //Generate Random Values for each Bingo Card
+    //Create an array of numbers
     public static void generateRandomValuesOfCard(ArrayList<Integer> card){
         Random rand = new Random();
         int num = 0;
 
         //Values for B
+        //Generate 5 random numbers from 1 to 15
         for(int b = 0; b < 5; b++){
             num = rand.nextInt(15) + 1;
             if(!card.contains(num)){
@@ -67,6 +74,7 @@ public class Main {
         }
 
         //Values for I
+        //Generate 5 random numbers from 16 to 30
         for(int i = 0; i < 5; i++){
             num = rand.nextInt(15) + 16;
             if(!card.contains(num)){
@@ -77,6 +85,7 @@ public class Main {
         }
 
         //Values for N
+        //Generate 5 random numbers from 31 to 45
         for(int n = 0; n < 5; n++){
             num = rand.nextInt(15) + 31;
             if(!card.contains(num)){
@@ -87,6 +96,7 @@ public class Main {
         }
 
         //Values for G
+        //Generate 5 random numbers from 46 to 60
         for(int g = 0; g < 5; g++){
             num = rand.nextInt(15) + 46;
             if(!card.contains(num)){
@@ -97,6 +107,7 @@ public class Main {
         }
 
         //Values for O
+        //Generate 5 random numbers from 61 to 75
         for(int o = 0; o < 5; o++){
             num = rand.nextInt(15) + 61;
             if(!card.contains(num)){
@@ -107,6 +118,7 @@ public class Main {
         }
         
         //Replace the 13th value with 0
+        //This is the free space
         card.set(12, 0);
     }
 
@@ -117,20 +129,28 @@ public class Main {
         out.println("| B  | I  | N  | G  | O  |\t\t| B  | I  | N  | G  | O  |");
         out.println("+----+----+----+----+----+\t\t+----+----+----+----+----+");
 
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 10; j++){
-                //Replace 0 with FR
+        for(int i = 0; i < 5; i++){ //Rows
+            for(int j = 0; j < 10; j++){ //Columns
+                
+                //If the Value of the Column is in 5
+                //Create a border and tab for the second ticket
                 if(j==5){
                     out.print("|\t\t");
                 }
+                
+                //if the value is 0, print FR (Free Space)
+                //The middle value of the card
                 if(union.get(i + j * 5) == 0){
                     out.print("| FR ");
                 }else{
-                out.print("| ");
-                out.format("%02d",union.get(i + j * 5));
-                out.print(" "); 
+                    //Print the values of the card
+                    //Print the Border of the card
+                    out.print("| ");
+                    out.format("%02d",union.get(i + j * 5));
+                    out.print(" "); 
                 }   
             }
+            //Print the Border of the card if the values are printed
             out.print("|\t\t");
             out.println();
             out.println("+----+----+----+----+----+\t\t+----+----+----+----+----+");
@@ -163,6 +183,7 @@ public class Main {
         return unionOfTwoCards;
     }
 
+    //Asks the user if they wants to try again
     public static boolean tryAgain(){
         Scanner input = new Scanner(System.in);
         out.print("\nDo you want to Generate new BINGO Tickets? (Y/N): ");
